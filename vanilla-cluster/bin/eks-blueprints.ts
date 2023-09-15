@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
 import { GlobalResources } from '@aws-quickstart/eks-blueprints';
+import { CfnParameter } from 'aws-cdk-lib';
 
 const app = new cdk.App();
 const version = 'auto';
@@ -19,6 +20,14 @@ const addOns: Array<blueprints.ClusterAddOn> = [
     // new blueprints.addons.CoreDnsAddOn(),
     // new blueprints.addons.KubeProxyAddOn()
 ];
+
+const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
+    type: "String",
+    description: "The VPC ID of the VPC that this cluster will be deployed into."});
+
+const clusterName = new CfnParameter(app, "clusterName", {
+    type: "String",
+    description: "The name of the cluster."});
 
 // const vpcStack = new VPCStack(app, 'eks-blueprint-vpc', { env: { account, region } });
 
