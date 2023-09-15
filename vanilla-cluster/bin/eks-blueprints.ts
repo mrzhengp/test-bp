@@ -11,20 +11,20 @@ const version = 'auto';
 // const clusterVpcId = clusterVpcId.valueAsString;
 
 const addOns: Array<blueprints.ClusterAddOn> = [
-    new blueprints.addons.MetricsServerAddOn(),
-    new blueprints.addons.ClusterAutoScalerAddOn(),
-    new blueprints.addons.AwsLoadBalancerControllerAddOn(),
-    new blueprints.addons.VpcCniAddOn(),
+    // new blueprints.addons.MetricsServerAddOn(),
+    // new blueprints.addons.ClusterAutoScalerAddOn(),
+    // new blueprints.addons.AwsLoadBalancerControllerAddOn(),
+    // new blueprints.addons.VpcCniAddOn(),
     // new blueprints.addons.ArgoCDAddOn(),
     // new blueprints.addons.CalicoOperatorAddOn(),
     // new blueprints.addons.CoreDnsAddOn(),
     // new blueprints.addons.KubeProxyAddOn()
 ];
 
-// const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
-//     type: "String",
-//     description: "The VPC ID of the VPC that this cluster will be deployed into."
-// });
+const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
+    type: "String",
+    description: "The VPC ID of the VPC that this cluster will be deployed into."
+});
 
 // const clusterName = new CfnParameter(app, "clusterName", {
 //     type: "String",
@@ -35,6 +35,8 @@ const addOns: Array<blueprints.ClusterAddOn> = [
 // const vpc = new ec2.Vpc(app, 'TheVPC', {
 //     ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/16'),
 // })
+
+app.synth()
 
 const stack = blueprints.EksBlueprint.builder()
     // .account(account)
