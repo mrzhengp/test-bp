@@ -23,6 +23,7 @@ const addOns: Array<blueprints.ClusterAddOn> = [
 ];
 
 const clusterVpcId = process.env.CLUSTER_VPC_ID as string;
+const clusterName = process.env.DEV_CLUSTER_NAME as string;
 
 // const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
 //     type: "String",
@@ -51,4 +52,4 @@ const stack = blueprints.EksBlueprint.builder()
     .addOns(...addOns)
     .useDefaultSecretEncryption(false) // set to false to turn secret encryption off (non-production/demo cases)
     // .build(app, clusterName.valueAsString);
-    .build(app, 'dev-cluster');
+    .build(app, clusterName);
