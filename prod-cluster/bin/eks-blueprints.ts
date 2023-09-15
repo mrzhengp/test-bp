@@ -23,7 +23,7 @@ const addOns: Array<blueprints.ClusterAddOn> = [
 ];
 
 const clusterVpcId = process.env.CLUSTER_VPC_ID as string;
-const clusterName = process.env.CLUSTER_NAME as string;
+// const clusterName = process.env.CLUSTER_NAME as string;
 
 // const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
 //     type: "String",
