@@ -21,13 +21,14 @@ const addOns: Array<blueprints.ClusterAddOn> = [
     // new blueprints.addons.KubeProxyAddOn()
 ];
 
-const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
-    type: "String",
-    description: "The VPC ID of the VPC that this cluster will be deployed into."});
+// const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
+//     type: "String",
+//     description: "The VPC ID of the VPC that this cluster will be deployed into."
+// });
 
-const clusterName = new CfnParameter(app, "clusterName", {
-    type: "String",
-    description: "The name of the cluster."});
+// const clusterName = new CfnParameter(app, "clusterName", {
+//     type: "String",
+//     description: "The name of the cluster."});
 
 // const vpcStack = new VPCStack(app, 'eks-blueprint-vpc', { env: { account, region } });
 
@@ -38,12 +39,12 @@ const clusterName = new CfnParameter(app, "clusterName", {
 const stack = blueprints.EksBlueprint.builder()
     // .account(account)
     // .region(region)
-    .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(clusterVpcId.valueAsString))
+    // .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(clusterVpcId.valueAsString))
     // .resourceProvider(GlobalResources.Vpc, new blueprints.DirectVpcProvider(vpcStack.vpc))
     // .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(vpcStack.vpc.vpcId))
-    // .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(undefined, {primaryCidr: "10.20.0.0/16"}))
+    .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(undefined, {primaryCidr: "10.20.0.0/16"}))
     .version(version)
     .addOns(...addOns)
     .useDefaultSecretEncryption(false) // set to false to turn secret encryption off (non-production/demo cases)
-    .build(app, clusterName.valueAsString);
-    // .build(app, 'eks-blueprint-staging-existing-vpc');
+    // .build(app, clusterName.valueAsString);
+    .build(app, 'dev-cluster');
