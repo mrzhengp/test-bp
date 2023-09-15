@@ -52,4 +52,5 @@ const stack = blueprints.EksBlueprint.builder()
     .addOns(...addOns)
     .useDefaultSecretEncryption(false) // set to false to turn secret encryption off (non-production/demo cases)
     // .build(app, clusterName.valueAsString);
-    .build(app, clusterName);
+    // .build(app, clusterName);
+    .build(app, 'dev-cluster');
