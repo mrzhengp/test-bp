@@ -1,7 +1,8 @@
 import * as cdk from 'aws-cdk-lib';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
 import { GlobalResources } from '@aws-quickstart/eks-blueprints';
-import { CfnParameter } from 'aws-cdk-lib';
+// import { EksBlueprintsStack } from '../lib/eks-blueprints-stack';
+// import { CfnParameter } from 'aws-cdk-lib';
 
 const app = new cdk.App();
 const version = 'auto';
@@ -21,10 +22,15 @@ const addOns: Array<blueprints.ClusterAddOn> = [
     // new blueprints.addons.KubeProxyAddOn()
 ];
 
-const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
-    type: "String",
-    description: "The VPC ID of the VPC that this cluster will be deployed into."
-});
+const clusterVpcId = process.env.CLUSTER_VPC_ID as string;
+
+// const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
+//     type: "String",
+//     description: "The VPC ID of the VPC that this cluster will be deployed into."
+// });
+
+// const nonProdAccountId = new StringParameter.fromStringParameterName(
+//     this, "nonProdAccountId", nonProdAccountIdParamName).stringValue;
 
 // const clusterName = new CfnParameter(app, "clusterName", {
 //     type: "String",
@@ -36,15 +42,11 @@ const clusterVpcId = new CfnParameter(app, "clusterVpcId", {
 //     ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/16'),
 // })
 
-app.synth()
-
 const stack = blueprints.EksBlueprint.builder()
-    // .account(account)
-    // .region(region)
-    // .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(clusterVpcId.valueAsString))
+    .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(clusterVpcId))
     // .resourceProvider(GlobalResources.Vpc, new blueprints.DirectVpcProvider(vpcStack.vpc))
     // .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(vpcStack.vpc.vpcId))
-    .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(undefined, {primaryCidr: "10.20.0.0/16"}))
+    // .resourceProvider(GlobalResources.Vpc, new blueprints.VpcProvider(undefined, {primaryCidr: "10.20.0.0/16"}))
     .version(version)
     .addOns(...addOns)
     .useDefaultSecretEncryption(false) // set to false to turn secret encryption off (non-production/demo cases)
